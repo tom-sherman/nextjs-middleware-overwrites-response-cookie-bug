@@ -1,4 +1,6 @@
 import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
+import { Display } from "./Display";
 
 async function updateAction(form: FormData) {
   "use server";
@@ -10,19 +12,14 @@ async function updateAction(form: FormData) {
 async function deleteAction(form: FormData) {
   "use server";
   cookies().delete("component-cookie");
+  revalidatePath("/");
 }
 
 export default function Page() {
   return (
     <>
-      <p>
-        component-cookie:{" "}
-        {cookies().get("component-cookie")?.value || "No data"}
-      </p>
-      <p>
-        middleware-cookie:{" "}
-        {cookies().get("middleware-cookie")?.value || "No data"}
-      </p>
+      <p>Page:</p>
+      <Display />
       <form action={updateAction}>
         <input name="component-cookie" />
         <button type="submit">Submit</button>
