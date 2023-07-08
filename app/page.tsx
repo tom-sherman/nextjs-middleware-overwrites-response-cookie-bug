@@ -1,10 +1,15 @@
 import { cookies } from "next/headers";
 
-async function action(form: FormData) {
+async function updateAction(form: FormData) {
   "use server";
   cookies().set("component-cookie", form.get("component-cookie") as string, {
     httpOnly: true,
   });
+}
+
+async function deleteAction(form: FormData) {
+  "use server";
+  cookies().delete("component-cookie");
 }
 
 export default function Page() {
@@ -18,9 +23,10 @@ export default function Page() {
         middleware-cookie:{" "}
         {cookies().get("middleware-cookie")?.value || "No data"}
       </p>
-      <form action={action}>
+      <form action={updateAction}>
         <input name="component-cookie" />
         <button type="submit">Submit</button>
+        <button formAction={deleteAction}>Delete</button>
       </form>
     </>
   );
