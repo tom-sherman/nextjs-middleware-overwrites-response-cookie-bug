@@ -1,6 +1,5 @@
+import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import { revalidatePath } from "next/cache";
-import { Display } from "./Display";
 
 async function updateAction(form: FormData) {
   "use server";
@@ -9,17 +8,23 @@ async function updateAction(form: FormData) {
   });
 }
 
-async function deleteAction(form: FormData) {
+async function deleteAction() {
   "use server";
   cookies().delete("component-cookie");
-  revalidatePath("/");
+  redirect("http://localhost:3000/");
 }
 
 export default function Page() {
   return (
     <>
-      <p>Page:</p>
-      <Display />
+      <p>
+        component-cookie:{" "}
+        {cookies().get("component-cookie")?.value || "No data"}
+      </p>
+      <p>
+        middleware-cookie:{" "}
+        {cookies().get("middleware-cookie")?.value || "No data"}
+      </p>
       <form action={updateAction}>
         <input name="component-cookie" />
         <button type="submit">Submit</button>
