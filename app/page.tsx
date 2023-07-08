@@ -2,16 +2,22 @@ import { cookies } from "next/headers";
 
 async function action(form: FormData) {
   "use server";
-  cookies().set("some-cookie", form.get("some-cookie") as string);
+  cookies().set("component-cookie", form.get("component-cookie") as string);
 }
 
 export default function Page() {
   return (
     <>
-      <p>some-cookie: {cookies().get("some-cookie")?.value || "No data"}</p>
-      <p>other-cookie: {cookies().get("other-cookie")?.value || "No data"}</p>
+      <p>
+        component-cookie:{" "}
+        {cookies().get("component-cookie")?.value || "No data"}
+      </p>
+      <p>
+        middleware-cookie:{" "}
+        {cookies().get("middleware-cookie")?.value || "No data"}
+      </p>
       <form action={action}>
-        <input name="some-cookie" />
+        <input name="component-cookie" />
         <button type="submit">Submit</button>
       </form>
     </>
