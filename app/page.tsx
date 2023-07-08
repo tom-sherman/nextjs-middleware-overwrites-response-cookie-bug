@@ -11,7 +11,7 @@ async function updateAction(form: FormData) {
 async function deleteAction() {
   "use server";
   cookies().delete("component-cookie");
-  redirect("http://localhost:3000/");
+  redirect("/");
 }
 
 export default function Page() {
