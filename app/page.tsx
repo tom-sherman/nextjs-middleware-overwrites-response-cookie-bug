@@ -2,7 +2,9 @@ import { cookies } from "next/headers";
 
 async function action(form: FormData) {
   "use server";
-  cookies().set("component-cookie", form.get("component-cookie") as string);
+  cookies().set("component-cookie", form.get("component-cookie") as string, {
+    httpOnly: true,
+  });
 }
 
 export default function Page() {
